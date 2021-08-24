@@ -1,0 +1,4 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="_content/MudBlazor" Path="/Users/aroras/.nuget/packages/mudblazor/5.1.0/build/../staticwebassets/" />
+  <ContentRoot BasePath="/" Path="/Users/aroras/RiderProjects/HelloTraveller/HelloTraveller/obj/Debug/net5.0/scopedcss/bundle/" />
+</StaticWebAssets>

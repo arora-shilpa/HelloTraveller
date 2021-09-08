@@ -1,0 +1,49 @@
+@using HelloTraveller.Models
+@using System.Text.RegularExpressions
+
+<MudCardActions>
+    <MudTextField Style="width: 90%" id="@SearchTxtFieldId" Label="Search..." @bind-Value="Search" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search"/>
+    <MudButton Style="width: 10%" OnClick="Submit" Variant="Variant.Filled" Color="Color.Primary">Search</MudButton>
+</MudCardActions>
+<p style="color: red">@_errorMessage</p>
+
+@code
+{
+    [Parameter]
+    public string SearchTxtFieldId { get; set; } = "SearchTxtFieldId";
+
+    private string Search { get; set; }
+    private string _errorMessage;
+
+    [Parameter]
+    public EventCallback<string> OnSubmitReview { get; set; }
+
+    private async void Submit()
+    {
+        if (ValidateSearchText())
+            await OnSubmitReview.InvokeAsync(Search);
+    }
+
+    private bool ValidateSearchText()
+    {
+        if (string.IsNullOrWhiteSpace(Search))
+        {
+            _errorMessage = "Please enter the search text.";
+            return false;
+        }
+        if (!Regex.IsMatch(Search, @"^[\p{L}\p{N}-_, ]+$"))
+        {
+            _errorMessage = "Alphanumeric including '-','_' and ',' special characters are allowed.";
+            return false;
+        }
+        if (Search.Length < 1 || Search.Length > 50)
+        {
+            _errorMessage = "Text must be in between 1 to 50 characters.";
+            return false;
+        }
+        _errorMessage = string.Empty;
+        return true;
+    }
+
+
+}

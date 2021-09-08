@@ -1,0 +1,22 @@
+@using HelloTraveller.Models
+
+@foreach (var topic in Topics)
+{
+    <MudChip Icon="@Icons.Material.Filled.CallMade" IconColor="Color.Inherit" Color="Color.Primary" OnClick="@(() => SearchTopic(topic.Title))">
+        @topic.Title
+    </MudChip>
+}
+
+@code
+{
+    [Parameter]
+    public Topics[] Topics { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnTopicClick { get; set; }
+
+    private async void SearchTopic(string topicTitle)
+    {
+        await OnTopicClick.InvokeAsync(topicTitle);
+    }
+}

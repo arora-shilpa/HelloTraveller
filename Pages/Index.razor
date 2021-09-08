@@ -1,37 +1,69 @@
 @page "/"
+@using HelloTraveller.Services
+@using HelloTraveller.Models
+@inject IMyService _myService
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+@if (AllPhotos != null)
+{
+    <MudPaper>
+        <TopicsComponent Topics="Topics" OnTopicClick="OnTopicCLick"/>
+
+        <SearchComponent SearchTxtFieldId="search" OnSubmitReview="OnSearchClick"/>
+    </MudPaper>
     <MudGrid>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudGrid>
-                <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-                </MudItem>
-                <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-                </MudItem>
-            </MudGrid>
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 100%"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
+        @foreach (var data in AllPhotos)
+        {
+            <CardViewComponent MyData="data"/>
+        }
     </MudGrid>
-</MudContainer>
+}
+
+@code{
+
+    private string Search { get; set; }
+    private MyModelClass MyData { get; set; }
+    private Result[] AllPhotos { get; set; }
+    private Topics[] Topics { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            AllPhotos = await _myService.GetAllData();
+            Topics = await _myService.GetTopics();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    private async Task OnSearchClick(string searchTerm)
+    {
+        Search = searchTerm;
+        await SearchPlace();
+    }
+
+    private async Task OnTopicCLick(string topic)
+    {
+        Search = topic;
+        await SearchPlace();
+    }
+
+    private async Task SearchPlace()
+    {
+        try
+        {
+            MyData = await _myService.SearchPhotos(Search);
+            AllPhotos = MyData.Results;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+}

@@ -1,3 +1,5 @@
+using System;
+using HelloTraveller.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,10 @@ namespace HelloTraveller
             services.AddMudServices();
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddHttpClient<IMyService, MyService>(client =>
+            {
+                client.BaseAddress = new Uri("https://api.unsplash.com");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

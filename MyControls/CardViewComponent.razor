@@ -6,36 +6,42 @@
     public Result MyData { get; set; }
 }
 
-<MudItem>
-    <MudCard Class="mt-16 px-8" Style="width:400px">
-        <MudCardHeader>
-            <CardHeaderAvatar>
-                @if (MyData.User.ProfileImage != null)
-                {
-                    <MudAvatar Image=@MyData.User.ProfileImage.Medium.ToString()/>
-                }
-                else
-                {
-                    <MudAvatar Size="Size.Small" Color="Color.Primary">@MyData.User.Name.First()</MudAvatar>
-                }
-            </CardHeaderAvatar>
-            <CardHeaderContent>
-                <MudText Typo="Typo.body1">@MyData.User.Name</MudText>
-                <MudText Typo="Typo.body2">@MyData.User.Username</MudText>
-            </CardHeaderContent>
-            <CardHeaderActions>
-                <MudLink Href=@String.Format("https://www.instagram.com/{0}", MyData.User.InstagramUsername) Target="_blank">
-                    <MudIconButton Icon="@Icons.Custom.Brands.Instagram" Color="Color.Primary"/>
-                </MudLink>
-            </CardHeaderActions>
-        </MudCardHeader>
-        <MudCardMedia Image=@MyData.Urls.Regular.ToString() Height="250"/>
-        <MudCardContent>
+<MudCard Class="mt-16 px-8">
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            sdsds
+            @if (MyData.User.ProfileImage != null)
+            {
+                <MudAvatar Image=@MyData.User.ProfileImage.Medium.ToString()/>
+            }
+            else
+            {
+                <MudAvatar Size="Size.Small" Color="Color.Primary">@MyData.User.Name.First()</MudAvatar>
+            }
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.body1">@MyData.User.Name.Split(" ")[0]aaa</MudText>
+            <MudText Typo="Typo.caption">[@MyData.User.Username]</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudLink Href=@String.Format("https://www.instagram.com/{0}", MyData.User.InstagramUsername) Target="_blank">
+                <MudIconButton Icon="@Icons.Custom.Brands.Instagram" Color="Color.Primary"/>
+            </MudLink>
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardMedia Image=@MyData.Urls.Regular.ToString() Height="250"/>
+    <MudCardContent>
+        @if (MyData.Description != null)
+        {
             <MudText Typo="Typo.body2">@MyData.Description</MudText>
-        </MudCardContent>
-        <MudCardActions>
-            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary"/>
-            <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Primary"/>
-        </MudCardActions>
-    </MudCard>
-</MudItem>
+        }
+        else
+        {
+            <MudText Typo="Typo.body2">No Description</MudText>
+        }
+    </MudCardContent>
+    <MudCardActions>
+        <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary"/>
+        <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Primary"/>
+    </MudCardActions>
+</MudCard>

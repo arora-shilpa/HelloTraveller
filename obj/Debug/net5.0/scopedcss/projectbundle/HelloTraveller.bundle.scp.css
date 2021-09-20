@@ -1,5 +1,12 @@
 @import '';
 
+/* _content/HelloTraveller/MyControls/CardViewComponent.razor.rz.scp.css */
+.desc_text[b-gffc4zlsh3]{
+    white-space: nowrap;
+    /*width: 50px;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 /* _content/HelloTraveller/Shared/MainLayout.razor.rz.scp.css */
 .sidebar[b-rapqyu5fyc] {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);

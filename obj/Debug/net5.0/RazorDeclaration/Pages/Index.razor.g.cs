@@ -89,6 +89,34 @@ using MudBlazor;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 12 "/Users/aroras/RiderProjects/HelloTraveller/HelloTraveller/_Imports.razor"
+using MudBlazor.Extensions;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "/Users/aroras/RiderProjects/HelloTraveller/HelloTraveller/_Imports.razor"
+using HelloTraveller.MyControls;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 2 "/Users/aroras/RiderProjects/HelloTraveller/HelloTraveller/Pages/Index.razor"
+using HelloTraveller.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "/Users/aroras/RiderProjects/HelloTraveller/HelloTraveller/Pages/Index.razor"
+using HelloTraveller.Models;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -97,6 +125,63 @@ using MudBlazor;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 31 "/Users/aroras/RiderProjects/HelloTraveller/HelloTraveller/Pages/Index.razor"
+      
+    private int _selected = 1;
+
+    private string Search { get; set; }
+    private MyModelClass MyData { get; set; }
+    private Result[] AllPhotos { get; set; }
+    private Topics[] Topics { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            AllPhotos = await _myService.GetAllData();
+            Topics = await _myService.GetTopics();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    private async Task OnSearchClick(string searchTerm)
+    {
+        Search = searchTerm;
+        await SearchPlace();
+    }
+
+    private async Task OnTopicCLick(string topic)
+    {
+    //_snackbar.Add(topic);
+        Search = topic;
+        await SearchPlace();
+    }
+
+    private async Task SearchPlace()
+    {
+        try
+        {
+            MyData = await _myService.SearchPhotos(Search);
+            AllPhotos = MyData.Results;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IMyService _myService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ISnackbar _snackbar { get; set; }
     }
 }
 #pragma warning restore 1591

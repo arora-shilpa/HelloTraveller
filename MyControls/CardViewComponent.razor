@@ -9,7 +9,6 @@
 <MudCard Class="mt-16 px-8">
     <MudCardHeader>
         <CardHeaderAvatar>
-            sdsds
             @if (MyData.User.ProfileImage != null)
             {
                 <MudAvatar Image=@MyData.User.ProfileImage.Medium.ToString()/>
@@ -33,11 +32,13 @@
     <MudCardContent>
         @if (MyData.Description != null)
         {
-            <MudText Typo="Typo.body2">@MyData.Description</MudText>
+            <MudText Typo="Typo.body2">
+                <p class="desc_text">@MyData.Description</p>
+            </MudText>
         }
         else
         {
-            <MudText Typo="Typo.body2">No Description</MudText>
+            <MudText Typo="Typo.body2">No Description Available</MudText>
         }
     </MudCardContent>
     <MudCardActions>
